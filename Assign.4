@@ -1,0 +1,10 @@
+Q-1. Write an SQL query to print the FIRST_NAME from Worker table after replacing ‘a’ with ‘A’.
+A1. SELECT replace(first_name, 'a', 'A') FROM worker;
+
+Q-2. Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending and DEPARTMENT Descending.
+A2.  SELECT * FROM worker  order by first_name asc, department desc;
+
+Q-3. Write an SQL query to fetch the names of workers who earn the highest salary.
+A3.  SELECT concat(w.first_name, ' ',last_name) as Worker_Name 
+       FROM worker w
+       WHERE salary in (select max(salary) from worker);
