@@ -1,10 +1,8 @@
-Q-1. Write an SQL query to print the FIRST_NAME from Worker table after removing white spaces from the right side.
-Ans Q1 :- select rtrim(first_name) from worker;
+Q-1. Write an SQL query to fetch “FIRST_NAME” from Worker table using the alias name as <WORKER_NAME>.
+A-1 :-  select first_name AS WORKER_NAME FROM worker;
 
+Q-2. Write an SQL query to fetch unique values of DEPARTMENT from Worker table.
+A-2 :-  select distinct department from worker;
 
-Q-2. Write an SQL query that fetches the unique values of DEPARTMENT from Worker table and prints its length.
-Ans Q2 :- select distinct department, length(department)  as department_length from worker;
-
-
-Q-3. Write an SQL query to fetch nth max salaries from a table.
-Ans Q3 :- select max(salary) from worker;
+Q-3. Write an SQL query to show the last 5 record from a table.
+A-3 :-  select * from worker order by worker_id desc limit 5;
