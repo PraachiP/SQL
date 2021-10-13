@@ -1,0 +1,55 @@
+SQL Questions on IMDB Dataset.
+
+
+Note: the pid's, mid's might have spaces at starting and ending, so when you are comparing it's suggested to use TRIM() function.
+
+
+Q1. List all the directors who directed a 'Comedy' movie in a leap year. (You need to check that the genre is 'Comedy’ and year is a leap year) Your query should return director name, the movie name, and the year.
+Ans:-
+select p.name Director_Name, m.title Movie_Name, m.year
+from movie m JOIN 
+m_director d
+ON trim(m.mid) = trim(d.mid)
+JOIN person p
+ON trim(d.pid) = trim(p.pid)
+JOIN m_genre MG
+ON trim(m.mid) = trim(MG.mid)
+JOIN genre G
+ON G.gid = MG.gid
+where m.year%4 = 0
+AND m.year % 100 <> 0
+OR m.year % 400 = 0
+AND G.name like '%Comedy%';
+
+
+Q2. List the names of all the actors who played in the movie 'Anand' (1971)
+Ans:- 
+1>	 select p.name Actor
+from person p, movie m, m_cast c
+where m.title = 'Anand'
+AND trim(c.mid) = trim(m.mid)
+AND trim(c.pid) = trim(p.pid);
+2>	select p.name Actor
+from person p JOIN m_cast c
+ON trim(c.pid) = trim(p.pid)
+JOIN movie m
+ON trim(c.mid) = trim(m.mid)
+WHERE m.title = 'Anand';
+
+
+Q3. List all the actors who acted in a film before 1970 and in a film after 1990. (That is: < 1970 and > 1990).
+Ans:- 
+SELECT distinct p.name
+FROM person p 
+JOIN
+(SELECT DISTINCT TRIM(MC.PID) PID
+ FROM Movie M JOIN M_Cast MC 
+ ON M.MID = MC.MID
+ WHERE M.year < 1970) Y70 
+ ON Y70.PID = TRIM(P.PID)
+ JOIN
+ (SELECT DISTINCT TRIM(MC.PID) PID
+ FROM Movie M JOIN M_Cast MC 
+ ON M.MID = MC.MID
+ WHERE M.year > 1990) Y90
+ ON Y90.PID = Y70.PID; 
